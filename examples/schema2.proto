@@ -1,0 +1,11 @@
+syntax = "proto2";
+package protobuf.editor;
+
+message OtherRecord {
+  int32 other_id = 1;
+}
+
+message MyRecord {
+  string f1 = 1;
+  OtherRecord f2 = 2;
+}

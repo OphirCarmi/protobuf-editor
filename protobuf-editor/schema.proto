@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package pbe;
+
+message HelloWorld {
+  required sint32 hi = 1;
+  required sint32 how = 2;
+  required sint32 are = 3;
+  optional float you = 4;
+}
+
+message ByeWorld {
+  repeated double bye = 1;
+}

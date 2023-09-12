@@ -1,0 +1,12 @@
+[submodule "3rdparty/icecream-cpp"]
+	path = 3rdparty/icecream-cpp
+	url = https://github.com/renatoGarcia/icecream-cpp.git
+[submodule "3rdparty/imgui"]
+	path = 3rdparty/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "3rdparty/clip"]
+	path = 3rdparty/clip
+	url = https://github.com/dacap/clip.git
+[submodule "3rdparty/protobuf"]
+	path = 3rdparty/protobuf
+	url = https://github.com/protocolbuffers/protobuf.git
