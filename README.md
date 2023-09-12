@@ -60,6 +60,7 @@ protoc-24.3-linux-x86_64.zip
    
 8. In the root directory of the repo, do:
    ```
+   git submodule update --init --recursive
    mkdir build
    cd build
    cmake -DABSL_PROPAGATE_CXX_STD=y -Dprotobuf_BUILD_TESTS=OFF ..
