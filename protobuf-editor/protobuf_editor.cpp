@@ -1,7 +1,27 @@
+/************************************************************************
+ * Copyright (c) 2023 Ophir Carmi
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 #include "protobuf_editor.h"
 
 #include <fstream>
-#include <regex>
 
 #include "clip/clip.h"
 #include "file.h"
@@ -327,7 +347,7 @@ void ProtobufEditor::SetRepeatedEnumField(::google::protobuf::Message* msg,
     for (int k = 0; k < size; ++k) {
       auto* enum_desc = msg->GetReflection()->GetRepeatedEnum(*msg, field_desc, k);
       int num_values = enum_desc->type()->value_count();
-      const char* names[num_values];
+      const char* names[static_cast<uint64_t>(num_values)];
       for (int i = 0; i < num_values; ++i) {
         names[i] = enum_desc->type()->value(i)->name().c_str();
       }
@@ -345,7 +365,7 @@ void ProtobufEditor::SetNonRepeatedEnumField(::google::protobuf::Message* msg,
                                              const ::google::protobuf::FieldDescriptor* field_desc) {
   auto* enum_desc = msg->GetReflection()->GetEnum(*msg, field_desc);
   int num_values = enum_desc->type()->value_count();
-  const char* names[num_values];
+  const char* names[static_cast<uint64_t>(num_values)];
   for (int i = 0; i < num_values; ++i) {
     names[i] = enum_desc->type()->value(i)->name().c_str();
   }
@@ -396,7 +416,7 @@ static bool validate_uint(const std::string& str, uint32_t* val) {
       return false;
     }
   }
-  uint64_t temp = stoll(str);
+  uint64_t temp = static_cast<uint64_t>(stoll(str));
   if (temp > UINT32_MAX) {
     return false;
   }
@@ -510,7 +530,6 @@ void ProtobufEditor::SetUintField(::google::protobuf::Message* msg,
 
 void ProtobufEditor::SetRepeatedBoolField(::google::protobuf::Message* msg,
                                           const ::google::protobuf::FieldDescriptor* field_desc) {
-
   if (ImGui::Button(("+ " + field_desc->name()).c_str())) {
     msg->GetReflection()->AddBool(msg, field_desc, 0);
     ImGui::SetNextItemOpen(true);
@@ -617,7 +636,7 @@ void ProtobufEditor::SetRepeatedFloatField(::google::protobuf::Message* msg,
     ImGui::SetNextItemOpen(true);
   }
   ImGui::SameLine();
-  
+
   bool tree_selected = ImGui::TreeNode(field_desc->name().c_str());
   if (tree_selected) {
     int size = msg->GetReflection()->FieldSize(*msg, field_desc);
@@ -680,7 +699,6 @@ void ProtobufEditor::SetFloatField(::google::protobuf::Message* msg,
 
 void ProtobufEditor::SetRepeatedDoubleField(::google::protobuf::Message* msg,
                                             const ::google::protobuf::FieldDescriptor* field_desc) {
-
   if (ImGui::Button(("+ " + field_desc->name()).c_str())) {
     msg->GetReflection()->AddDouble(msg, field_desc, 0);
     ImGui::SetNextItemOpen(true);
@@ -770,7 +788,6 @@ void ProtobufEditor::AllRepeatedStringVals(::google::protobuf::Message* msg,
 
 void ProtobufEditor::SetRepeatedStringField(::google::protobuf::Message* msg,
                                             const ::google::protobuf::FieldDescriptor* field_desc) {
-
   if (ImGui::Button(("+ " + field_desc->name()).c_str())) {
     msg->GetReflection()->AddString(msg, field_desc, "");
     ImGui::SetNextItemOpen(true);
@@ -918,7 +935,7 @@ bool ProtobufEditor::SetNonRepeatedMessage(::google::protobuf::Message* msg,
   bool temp_tree_selected = ImGui::TreeNode(name.c_str());
   if (!tree_selected) {
     tree_selected = temp_tree_selected;
-  }  
+  }
   ImGui::SameLine();
 
   if (tree_selected) {
@@ -981,9 +998,9 @@ bool ProtobufEditor::SetRepeatedMessage(::google::protobuf::Message* msg,
     for (int k = 0; k < size; ++k) {
       auto* field_msg = msg->GetReflection()->MutableRepeatedMessage(msg, field_desc, k);
       std::string name = field_desc->name() + std::to_string(k);
-      bool tree_selected = ImGui::TreeNode(name.c_str());
+      bool tree_selected2 = ImGui::TreeNode(name.c_str());
       ImGui::SameLine();
-      if (tree_selected) {
+      if (tree_selected2) {
         if (AddRemoveRepeatedField(msg, field_desc, k, size, name)) {
           ImGui::TreePop();
           break;
@@ -1163,7 +1180,7 @@ void ProtobufEditor::MainScreen() {
   static std::string error_str;
 
   ImGui::Begin("main");
-  ImGui::SetWindowFontScale(1.8);
+  ImGui::SetWindowFontScale(1.8f);
 
   browse(&file_path_);
 

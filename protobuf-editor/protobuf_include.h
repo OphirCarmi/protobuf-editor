@@ -13,7 +13,6 @@
 
 #pragma GCC diagnostic ignored "-Wuseless-cast"
 
-
 #include "schema.pb.h"
 
 #pragma GCC diagnostic pop

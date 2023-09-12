@@ -4,9 +4,17 @@ project(protobuf-editor)
 
 option(DEBUG "Compile with O0" OFF)
 
-# find_package(glfw3 REQUIRED)
-# find_package(OpenGL REQUIRED)
-
+set(PBE_CXX_FLAGS "-Wuseless-cast \
+-Wcast-align \
+-Wcast-qual \
+-Wsign-conversion \
+-Wfloat-equal \
+-Wfloat-conversion \
+-Wzero-as-null-pointer-constant \
+-Wunused-parameter \
+-Wshadow \
+")
+# -Werror \
 
 include_directories(../your_schema/)
 include_directories(../3rdparty/)
