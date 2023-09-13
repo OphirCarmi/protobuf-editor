@@ -11,7 +11,7 @@ https://github.com/OphirCarmi/protobuf-editor/assets/31179336/50ab37f6-ec6a-4c62
 
 
 ### Installation
-Tested on Ubuntu 20.04
+Tested on Ubuntu 18.04, 20.04
 
 1. install required packages:
 ```
