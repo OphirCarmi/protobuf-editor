@@ -1,6 +1,6 @@
 # Protobuf-Editor
 ## GUI for editing and review protocol buffers (=protobuf) packets
-Written in C++
+Written in C++, using [ImGui](https://github.com/ocornut/imgui)
 
 Currently support only proto2
 
