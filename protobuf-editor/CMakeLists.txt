@@ -14,25 +14,15 @@ set(PBE_CXX_FLAGS "-Wuseless-cast \
 -Wunused-parameter \
 -Wshadow \
 -Wpedantic \
+-Werror \
 ")
-# -Werror \
 
 include_directories(${CMAKE_BINARY_DIR}/../your_schema/)
 include_directories(${CMAKE_BINARY_DIR}/../3rdparty/)
 include_directories(${CMAKE_BINARY_DIR}/../3rdparty/imgui/)
-include_directories(${CMAKE_BINARY_DIR}/../3rdparty/imgui/backends/)
-include_directories(${CMAKE_BINARY_DIR}/../3rdparty/imgui/misc/)
-# include_directories(${PROTOBUF_INCLUDE_DIRS})
 include_directories(${CMAKE_BINARY_DIR}/../3rdparty/icecream-cpp/)
-include_directories(${CMAKE_BINARY_DIR}/../3rdparty/protobuf/src/)
-include_directories(${CMAKE_BINARY_DIR}/../3rdparty/protobuf/third_party/abseil-cpp/)
 
-file(GLOB SOURCES *.cpp
-    ../3rdparty/imgui/misc/cpp/*.cpp
-    ../3rdparty/imgui/backends/imgui_impl_glfw.cpp
-    ../3rdparty/imgui/backends/imgui_impl_opengl3.cpp
-    ../3rdparty/imgui/*.cpp
-)
+file(GLOB SOURCES *.cpp)
 
 if(DEBUG)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -g")
@@ -52,9 +42,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 add_dependencies(${PROJECT_NAME} schema)
 
-target_link_libraries(${PROJECT_NAME} LINK_PUBLIC glfw)
-target_link_libraries(${PROJECT_NAME} LINK_PUBLIC OpenGL::GL)
-target_link_libraries(${PROJECT_NAME} LINK_PUBLIC ${CMAKE_DL_LIBS})
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC libprotobuf)
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC clip)
 target_link_libraries(${PROJECT_NAME} LINK_PUBLIC schema)
+target_link_libraries(${PROJECT_NAME} LINK_PUBLIC imgui)

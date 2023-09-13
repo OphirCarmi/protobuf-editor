@@ -30,7 +30,7 @@
 #include "system.h"
 
 static bool is_not_set(::google::protobuf::Message* msg, const ::google::protobuf::FieldDescriptor* field_desc) {
-  return !msg->GetReflection()->HasField(*msg, field_desc);
+  return !field_desc->is_required() && !msg->GetReflection()->HasField(*msg, field_desc);
 }
 
 int ProtobufEditor::Init() {
