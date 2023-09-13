@@ -64,7 +64,7 @@ int ProtobufEditor::Init() {
 #endif  // __APPLE__
 
   // Create window with graphics context
-  window_ = glfwCreateWindow(1280, 720, "protobuf editor", NULL, NULL);
+  window_ = glfwCreateWindow(1280, 720, "protobuf editor", nullptr, nullptr);
   if (window_ == NULL) {
     return 1;
   }
