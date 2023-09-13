@@ -347,14 +347,18 @@ void ProtobufEditor::SetRepeatedEnumField(::google::protobuf::Message* msg,
     for (int k = 0; k < size; ++k) {
       auto* enum_desc = msg->GetReflection()->GetRepeatedEnum(*msg, field_desc, k);
       int num_values = enum_desc->type()->value_count();
-      const char* names[static_cast<uint64_t>(num_values)];
+      char **names = new char*[static_cast<uint64_t>(num_values)];
       for (int i = 0; i < num_values; ++i) {
-        names[i] = enum_desc->type()->value(i)->name().c_str();
+        names[i] = strdup(enum_desc->type()->value(i)->name().c_str());
       }
       int selected = enum_desc->index();
       std::string name = field_desc->name() + std::to_string(k);
-      ImGui::Combo(name.c_str(), &selected, names, num_values);
+      ImGui::Combo(name.c_str(), &selected, const_cast<const char **>(names), num_values);
       auto selected_val = enum_desc->type()->FindValueByName(names[selected]);
+      for (int i = 0; i < num_values; ++i) {
+        delete names[i];
+      }
+      delete[] names;
       msg->GetReflection()->SetRepeatedEnum(msg, field_desc, k, selected_val);
     }
     ImGui::TreePop();
@@ -365,9 +369,9 @@ void ProtobufEditor::SetNonRepeatedEnumField(::google::protobuf::Message* msg,
                                              const ::google::protobuf::FieldDescriptor* field_desc) {
   auto* enum_desc = msg->GetReflection()->GetEnum(*msg, field_desc);
   int num_values = enum_desc->type()->value_count();
-  const char* names[static_cast<uint64_t>(num_values)];
+  char** names = new char *[static_cast<uint64_t>(num_values)];
   for (int i = 0; i < num_values; ++i) {
-    names[i] = enum_desc->type()->value(i)->name().c_str();
+    names[i] = strdup(enum_desc->type()->value(i)->name().c_str());
   }
 
   if (is_not_set(msg, field_desc)) {
@@ -380,8 +384,12 @@ void ProtobufEditor::SetNonRepeatedEnumField(::google::protobuf::Message* msg,
   }
 
   int selected = enum_desc->index();
-  ImGui::Combo(field_desc->name().c_str(), &selected, names, num_values);
+  ImGui::Combo(field_desc->name().c_str(), &selected, const_cast<const char **>(names), num_values);
   auto selected_val = enum_desc->type()->FindValueByName(names[selected]);
+  for (int i = 0; i < num_values; ++i) {
+    delete names[i];
+  }
+  delete[] names;
   msg->GetReflection()->SetEnum(msg, field_desc, selected_val);
   RemoveSimpleField(msg, field_desc, field_desc->name());
 }

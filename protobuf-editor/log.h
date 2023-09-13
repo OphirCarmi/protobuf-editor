@@ -29,6 +29,7 @@
 #pragma GCC diagnostic ignored "-Wshadow"
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+#pragma GCC diagnostic ignored "-Wpedantic"
 #include <icecream.hpp>
 #pragma GCC diagnostic pop
 #endif /* RELEASE */
