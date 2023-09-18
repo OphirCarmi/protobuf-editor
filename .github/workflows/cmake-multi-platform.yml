@@ -60,13 +60,11 @@ jobs:
         git submodule update --init --recursive
         mkdir build
         cd build
-        cmake -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -DCMAKE_C_COMPILER=${{ matrix.c_compiler }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
+        cmake -DABSL_PROPAGATE_CXX_STD=y -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -DCMAKE_C_COMPILER=${{ matrix.c_compiler }} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} ..
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: |
-        pwd
-        ls -la
         cd build
         make -j 32
 
