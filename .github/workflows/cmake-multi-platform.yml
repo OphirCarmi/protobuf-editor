@@ -67,6 +67,7 @@ jobs:
       run: |
         pwd
         ls -la
+        cd build
         make -j 32
 
     # - name: Test
