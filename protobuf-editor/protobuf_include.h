@@ -11,7 +11,9 @@
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #pragma GCC diagnostic ignored "-Wshadow"
 #pragma GCC diagnostic ignored "-Wpedantic"
+#ifndef __clang__
 #pragma GCC diagnostic ignored "-Wuseless-cast"
+#endif /* __clang__ */
 #pragma GCC diagnostic ignored "-Woverflow"
 
 #include "schema.pb.h"

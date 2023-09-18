@@ -4,8 +4,7 @@ project(protobuf-editor)
 
 option(DEBUG "Compile with O0" OFF)
 
-set(PBE_CXX_FLAGS "-Wuseless-cast \
--Wcast-align \
+set(PBE_CXX_FLAGS "-Wcast-align \
 -Wcast-qual \
 -Wsign-conversion \
 -Wfloat-equal \
@@ -16,6 +15,11 @@ set(PBE_CXX_FLAGS "-Wuseless-cast \
 -Wpedantic \
 -Werror \
 ")
+
+if (NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  set(PBE_CXX_FLAGS "${PBE_CXX_FLAGS} -Wuseless-cast")
+endif()
+
 
 include_directories(${CMAKE_BINARY_DIR}/../your_schema/)
 include_directories(${CMAKE_BINARY_DIR}/../3rdparty/)

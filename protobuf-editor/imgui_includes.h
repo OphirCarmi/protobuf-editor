@@ -23,7 +23,9 @@
 #define IMGUI_INCLUDES_H_
 
 #pragma GCC diagnostic push
+#ifndef __clang__
 #pragma GCC diagnostic ignored "-Wuseless-cast"
+#endif /* __clang__ */
 #pragma GCC diagnostic ignored "-Wfloat-equal"
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wpedantic"
