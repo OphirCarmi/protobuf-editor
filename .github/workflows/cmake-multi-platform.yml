@@ -51,6 +51,7 @@ jobs:
       id: strings
       shell: bash
       run: |
+        apt-get install libglfw3 libglfw3-dev
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: Configure CMake
