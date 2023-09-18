@@ -11,7 +11,7 @@ https://github.com/OphirCarmi/protobuf-editor/assets/31179336/50ab37f6-ec6a-4c62
 
 
 ### Installation
-Tested on Ubuntu 18.04, 20.04, g++-9
+Tested on Ubuntu 18.04, 20.04, g++-9, clang
 
 1. install required packages:
 ```
@@ -32,13 +32,13 @@ protoc-24.3-linux-x86_64.zip
    cp path/to/your/schema your_schema/schema.proto
    ```
 5. In the `your_schema/schema.proto`:
-   
+
    a. Change the root message to be called `MyRecord`
 
    b. Change the package to be `protobuf.editor`
 
    c. Check proto version is `proto2`
-   
+
    for example:
     ```
     syntax = "proto2";
@@ -57,7 +57,7 @@ protoc-24.3-linux-x86_64.zip
    ```
    protoc --proto_path=your_schema/ schema.proto --cpp_out=your_schema/
    ```
-   
+
 8. In the root directory of the repo, do:
    ```
    git submodule update --init --recursive
