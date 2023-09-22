@@ -1131,7 +1131,7 @@ void ProtobufEditor::WantToClose(bool* tried_to_load) {
 
 void ProtobufEditor::Save(bool* cant_save, std::string* error_str, const std::string& path) {
   try {
-    int size = the_record_.ByteSizeLong();
+    size_t size = the_record_.ByteSizeLong();
     char* arr = new char[size];
     the_record_.SerializeToArray(arr, size);
 
