@@ -1136,7 +1136,7 @@ void ProtobufEditor::Save(bool* cant_save, std::string* error_str, const std::st
     the_record_.SerializeToArray(arr, size);
 
     std::ofstream output(path, std::ios::out | std::ios::trunc | std::ios::binary);
-    output.write(arr, size);
+    output.write(arr, static_cast<std::streamsize>(size));
     delete[] arr;
     output.close();
 
