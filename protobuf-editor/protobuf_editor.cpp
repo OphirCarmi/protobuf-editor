@@ -65,7 +65,7 @@ int ProtobufEditor::Init() {
 
   // Create window with graphics context
   window_ = glfwCreateWindow(1280, 720, "protobuf editor", nullptr, nullptr);
-  if (nullptr == window) {
+  if (nullptr == window_) {
     return 1;
   }
   glfwMakeContextCurrent(window_);
